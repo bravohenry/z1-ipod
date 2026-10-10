@@ -13,7 +13,6 @@ import { MeshGradientBackground } from "@/ipod/ryos/components/shared/MeshGradie
 import { WaterBackground } from "@/ipod/ryos/components/shared/WaterBackground";
 import { DisplayMode } from "@/ipod/ryos/types/lyrics";
 import { LyricsDisplay } from "../lyrics-display/LyricsDisplay";
-import { getIpodSmallScreenLyricsFontClassName } from "../lyrics-display/useLyricsDisplaySettings";
 import { StatusDisplay } from "../screen";
 import {
   PLAYER_PROGRESS_INTERVAL_MS,
@@ -23,7 +22,10 @@ import type { Track } from "@/ipod/ryos/shared/media/library";
 import type { IpodHostState } from "@/ipod/context";
 import type { IpodScreenProps } from "../../types";
 import type { ActivityInfo } from "@/ipod/host-types";
-import {useShaderEffectsEnabled,useShaderAnimationDisabled} from "@/ipod/host-hooks";
+import {
+  useShaderEffectsEnabled,
+  useShaderAnimationDisabled,
+} from "@/ipod/host-hooks";
 import { useSaveSongCoverColor } from "@/ipod/host-hooks";
 import { YouTubePlayer } from "@/ipod/ryos/components/shared/YouTubePlayer";
 
@@ -81,7 +83,6 @@ export function IpodScreenMediaOverlay({
   isPlaying,
   playbackRequested,
   isFullScreen,
-  isAppleMusicTrack,
   effectiveDisplayMode,
   shouldAnimateVisuals,
   coverUrl,
@@ -105,7 +106,6 @@ export function IpodScreenMediaOverlay({
   loopCurrent,
   onToggleVideo,
   registerActivity,
-  setAppleMusicKitNowPlaying,
   lyricsControls,
   lyricsAlignment,
   adjustLyricOffset,
@@ -118,9 +118,16 @@ export function IpodScreenMediaOverlay({
 }: IpodScreenMediaOverlayProps) {
   const saveCoverColor = useSaveSongCoverColor(currentTrack);
 
-  const graphicsEnabled=useShaderEffectsEnabled();
-  const motionDisabled=useShaderAnimationDisabled();
-  const visualMode=((effectiveDisplayMode===DisplayMode.Shader||effectiveDisplayMode===DisplayMode.Mesh||effectiveDisplayMode===DisplayMode.Water)&&!graphicsEnabled)||effectiveDisplayMode===DisplayMode.Landscapes&&motionDisabled?DisplayMode.Cover:effectiveDisplayMode;
+  const graphicsEnabled = useShaderEffectsEnabled();
+  const motionDisabled = useShaderAnimationDisabled();
+  const visualMode =
+    ((effectiveDisplayMode === DisplayMode.Shader ||
+      effectiveDisplayMode === DisplayMode.Mesh ||
+      effectiveDisplayMode === DisplayMode.Water) &&
+      !graphicsEnabled) ||
+    (effectiveDisplayMode === DisplayMode.Landscapes && motionDisabled)
+      ? DisplayMode.Cover
+      : effectiveDisplayMode;
 
   return (
     <div
@@ -129,7 +136,7 @@ export function IpodScreenMediaOverlay({
         menuMode || isCoverFlowOpen ? "z-0" : "z-20",
         menuMode || !showVideo || isCoverFlowOpen
           ? "opacity-0 pointer-events-none"
-          : "opacity-100"
+          : "opacity-100",
       )}
     >
       <div
@@ -156,7 +163,7 @@ export function IpodScreenMediaOverlay({
             (MusicKit bridge) based on the active track's source. The
             YouTube embed is hidden when display mode is not Video, but
             still provides audio. */}
-        {(
+        {
           <div
             className="size-full"
             style={
@@ -169,9 +176,7 @@ export function IpodScreenMediaOverlay({
               ref={playerRef}
               url={currentTrack.url}
               playing={playbackRequested}
-              controls={
-                showVideo && visualMode === DisplayMode.Video
-              }
+              controls={showVideo && visualMode === DisplayMode.Video}
               width="100%"
               height="100%"
               onEnded={!isFullScreen ? handleTrackEnd : undefined}
@@ -196,7 +201,10 @@ export function IpodScreenMediaOverlay({
                     disablekb: 1,
                     playsinline: 1,
                     enablejsapi: 1,
-                    origin: typeof window === "undefined" ? undefined : window.location.origin,
+                    origin:
+                      typeof window === "undefined"
+                        ? undefined
+                        : window.location.origin,
                   },
                   embedOptions: {
                     referrerPolicy: "strict-origin-when-cross-origin",
@@ -205,7 +213,7 @@ export function IpodScreenMediaOverlay({
               }}
             />
           </div>
-        )}
+        }
 
         {/* Landscape video background */}
         {visualMode === DisplayMode.Landscapes && shouldAnimateVisuals && (
@@ -253,25 +261,25 @@ export function IpodScreenMediaOverlay({
           {showVideo &&
             coverUrl &&
             (visualMode === DisplayMode.Cover || !isPlaying) && (
-            <motion.div
-              className="absolute inset-0 z-15"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={(e) => {
-                e.stopPropagation();
-                requestPlayback();
-              }}
-            >
-              {/* Single opacity animation (wrapper only) — nesting motion.img hid the overlay twice */}
-              <img
-                src={coverUrl}
-                alt={currentTrack?.title}
-                className="size-full object-cover brightness-50 pointer-events-none"
-              />
-            </motion.div>
-          )}
+              <motion.div
+                className="absolute inset-0 z-15"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  requestPlayback();
+                }}
+              >
+                {/* Single opacity animation (wrapper only) — nesting motion.img hid the overlay twice */}
+                <img
+                  src={coverUrl}
+                  alt={currentTrack?.title}
+                  className="size-full object-cover brightness-50 pointer-events-none"
+                />
+              </motion.div>
+            )}
         </AnimatePresence>
         {/* Transparent overlay to capture clicks */}
         {showVideo && (
@@ -312,46 +320,45 @@ export function IpodScreenMediaOverlay({
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.2 }}
             >
-              <ActivityIndicatorWithLabel
-                size="md"
-                state={activityState}
-              />
+              <ActivityIndicatorWithLabel size="md" state={activityState} />
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Lyrics Overlay */}
-        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 35 }}>
-        <LyricsDisplay
-          lines={lyricsControls.lines}
-          originalLines={lyricsControls.originalLines}
-          currentLine={lyricsControls.currentLine}
-          isLoading={lyricsControls.isLoading}
-          error={lyricsControls.error}
-          visible={shouldShowLyrics}
-          videoVisible={showVideo}
-          fontClassName={getIpodSmallScreenLyricsFontClassName(uiVariant)}
-          alignment={lyricsAlignment}
-          isTranslating={lyricsControls.isTranslating}
-          onAdjustOffset={(deltaMs) => {
-            adjustLyricOffset(deltaMs);
-            const newOffset = lyricOffset + deltaMs;
-            const sign = newOffset > 0 ? "+" : newOffset < 0 ? "" : "";
-            showStatusCallback(
-              `${t("apps.ipod.status.offset")} ${sign}${(newOffset / 1000).toFixed(2)}s`
-            );
-            const updatedTime = elapsedTime + newOffset / 1000;
-            lyricsControls.updateCurrentTimeManually(updatedTime);
-          }}
-          onSwipeUp={onNextTrack}
-          onSwipeDown={onPreviousTrack}
-          furiganaMap={furiganaMap}
-          soramimiMap={soramimiMap}
-          currentTimeMs={(elapsedTime + lyricOffset / 1000) * 1000}
-          coverUrl={coverUrl}
-          coverColor={currentTrack.coverColor}
-          onCoverColorResolved={saveCoverColor}
-        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ zIndex: 35 }}
+        >
+          <LyricsDisplay
+            lines={lyricsControls.lines}
+            originalLines={lyricsControls.originalLines}
+            currentLine={lyricsControls.currentLine}
+            isLoading={lyricsControls.isLoading}
+            error={lyricsControls.error}
+            visible={shouldShowLyrics}
+            videoVisible={showVideo}
+            alignment={lyricsAlignment}
+            isTranslating={lyricsControls.isTranslating}
+            onAdjustOffset={(deltaMs) => {
+              adjustLyricOffset(deltaMs);
+              const newOffset = lyricOffset + deltaMs;
+              const sign = newOffset > 0 ? "+" : newOffset < 0 ? "" : "";
+              showStatusCallback(
+                `${t("apps.ipod.status.offset")} ${sign}${(newOffset / 1000).toFixed(2)}s`,
+              );
+              const updatedTime = elapsedTime + newOffset / 1000;
+              lyricsControls.updateCurrentTimeManually(updatedTime);
+            }}
+            onSwipeUp={onNextTrack}
+            onSwipeDown={onPreviousTrack}
+            furiganaMap={furiganaMap}
+            soramimiMap={soramimiMap}
+            currentTimeMs={(elapsedTime + lyricOffset / 1000) * 1000}
+            coverUrl={coverUrl}
+            coverColor={currentTrack.coverColor}
+            onCoverColorResolved={saveCoverColor}
+          />
         </div>
       </div>
     </div>

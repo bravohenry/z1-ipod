@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 当前曲目、播放时钟与站内 iPod 歌词 API。
+ * [INPUT]: 当前曲目、作者歌单的歌词检索名、播放时钟与站内歌词API。
  * [OUTPUT]: useLyrics，同步歌词与请求状态。
  * [POS]: ryOS 歌词界面的会话适配；取消离场请求并隔离旧曲目结果。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
@@ -7,6 +7,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Track } from "./ryos/shared/media/library";
 import type { LyricLine } from "./ryos/types/lyrics";
+import { IPOD_TRACKS } from "@/data/playlist";
 const EMPTY_LINES: LyricLine[] = [];
 export function useLyrics(
   track: Track | null,
@@ -20,9 +21,10 @@ export function useLyrics(
     lines: LyricLine[];
     error?: string;
   }>({ key: "", lines: [] });
+  const authorTrack = IPOD_TRACKS.find((entry) => entry.id === track?.id);
   const id = track?.id,
-    title = track?.title,
-    artist = track?.artist ?? "";
+    title = authorTrack?.lyricsTitle ?? track?.title,
+    artist = authorTrack?.lyricsArtist ?? track?.artist ?? "";
   const key = JSON.stringify([id, title, artist]);
   useEffect(() => {
     if (!enabled || !id || !title) return;

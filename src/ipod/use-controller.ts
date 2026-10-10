@@ -120,6 +120,29 @@ export function useIpodController(
               ? saved.repeat
               : prev.repeat,
             shuffle: saved.shuffle === true,
+            theme: ["classic", "black", "u2"].includes(saved.theme)
+              ? saved.theme
+              : prev.theme,
+            backlight: ["2s", "10s", "always-on", "off"].includes(
+              saved.backlight,
+            )
+              ? saved.backlight
+              : prev.backlight,
+            displayMode: Object.values(DisplayMode).includes(saved.displayMode)
+              ? saved.displayMode
+              : prev.displayMode,
+            showLyrics:
+              typeof saved.showLyrics === "boolean"
+                ? saved.showLyrics
+                : prev.showLyrics,
+            lyricsFont: Object.values(LyricsFont).includes(saved.lyricsFont)
+              ? saved.lyricsFont
+              : prev.lyricsFont,
+            lyricsAlignment: Object.values(LyricsAlignment).includes(
+              saved.lyricsAlignment,
+            )
+              ? saved.lyricsAlignment
+              : prev.lyricsAlignment,
             favorites: Array.isArray(saved.favorites)
               ? saved.favorites.filter((v: unknown) => typeof v === "string")
               : [],
@@ -288,9 +311,10 @@ export function useIpodController(
       const max = menuHistory.at(-1)?.items.length ?? 0;
       setSelected((value) => Math.max(0, Math.min(max - 1, value + delta)));
     } else
-      patch({
-        volume: Math.max(0, Math.min(1, preferences.volume + delta * 0.05)),
-      });
+      setPreferences((previous) => ({
+        ...previous,
+        volume: Math.max(0, Math.min(1, previous.volume + delta * 0.05)),
+      }));
   };
   const select = () => {
     registerActivity();

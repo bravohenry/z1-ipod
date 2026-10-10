@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 作者歌单、ryOS 曲目索引与 YouTube oEmbed。
+ * [INPUT]: 作者歌单与 YouTube oEmbed。
  * [OUTPUT]: useIpodLibrary，本地添加/移除与异步曲目信息。
  * [POS]: 作者歌单保留在 data/playlist；本地存储只保存用户添加和移除的 ID。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
@@ -12,9 +12,11 @@ import {
   useCallback,
 } from "react";
 import type { Track } from "./ryos/shared/media/library";
-import catalog from "./catalog.json";
+import { IPOD_TRACKS } from "@/data/playlist";
 import { getYouTubeVideoId } from "./ryos/apps/ipod/constants";
-const knownMetadata: Record<string, Partial<Track>> = catalog;
+const knownMetadata: Record<string, Partial<Track>> = Object.fromEntries(
+  IPOD_TRACKS.map((track) => [track.id, track]),
+);
 const KEY = "z1:ipod:library";
 type Changes = { added: string[]; removed: string[] };
 const validIds = (value: unknown): string[] =>

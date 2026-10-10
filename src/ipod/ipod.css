@@ -4,7 +4,7 @@
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
  */
 .font-ipod-modern-ui {
-  /* UI face (Source Sans 3 OFL stand-in for Myriad Pro used on the iPod nano)
+  /* UI face (Source Sans 3 OFL stand-in for Myriad Pro on the iPod nano)
    * color screen and across iOS 6. We only bundle the bold weight —
    * the modern skin uses bold everywhere except secondary subtext,
    * which falls through to Helvetica Neue / -apple-system. */
@@ -278,7 +278,7 @@
 
 @font-face {
   font-family: MyriadPro;
-  /* OFL Source Sans 3 stands in for the commercial Myriad Pro used upstream */
+  /* OFL Source Sans 3 stand-in for commercial Myriad Pro (not redistributed) */
   src: url("/ipod/ryos/SourceSans3-Semibold.woff2") format("woff2");
   font-weight: 600;
   font-display: swap;
@@ -291,7 +291,7 @@
 }
 @font-face {
   font-family: IpodGeneva;
-  /* OFL Source Sans 3 stands in for the commercial Geneva bitmap used upstream */
+  /* OFL Source Sans 3 stand-in for commercial Geneva (not redistributed) */
   src: url("/ipod/ryos/SourceSans3-Regular.woff2") format("woff2");
   font-display: swap;
 }

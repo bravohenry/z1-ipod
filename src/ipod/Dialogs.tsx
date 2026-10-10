@@ -42,11 +42,11 @@ export function IpodDialogs({ c }: { c: IpodController }) {
                 z1han.com 改编自 ryOS
               </p>
               <Dialog.Description className="text-sm">
-                iPod interface by Ryo Lu / ryOS. Adapted for Z1 from commit
-                d989f4d, licensed under AGPL-3.0-or-later.
+                iPod interface by Ryo Lu / ryOS (commit d989f4d). Adapted for
+                Z1 by Zihan Huang. Licensed under AGPL-3.0-or-later.
               </Dialog.Description>
               <p className="my-3 text-sm">
-                Source for this adaptation:{" "}
+                Public source for this adaptation:{" "}
                 <a
                   href="https://github.com/bravohenry/z1-ipod"
                   target="_blank"
@@ -54,9 +54,9 @@ export function IpodDialogs({ c }: { c: IpodController }) {
                   className="underline"
                 >
                   bravohenry/z1-ipod
-                </a>
-                . Apple Music requires separate developer credentials. YouTube
-                playback follows each video’s embed permissions.
+                </a>{" "}
+                (AGPL-3.0). Apple Music requires separate developer credentials.
+                YouTube playback follows each video’s embed permissions.
               </p>
               <a
                 href="https://github.com/ryokun6/ryos"
@@ -64,7 +64,15 @@ export function IpodDialogs({ c }: { c: IpodController }) {
                 rel="noreferrer"
                 className="underline"
               >
-                Original source
+                Original ryOS
+              </a>
+              <a
+                href="https://github.com/bravohenry/z1-ipod"
+                target="_blank"
+                rel="noreferrer"
+                className="ml-4 underline"
+              >
+                z1-ipod (AGPL-3.0)
               </a>
               <a
                 href="/ipod/ryos/LICENSE.txt"
@@ -72,7 +80,7 @@ export function IpodDialogs({ c }: { c: IpodController }) {
                 rel="noreferrer"
                 className="ml-4 underline"
               >
-                License
+                License text
               </a>
             </>
           ) : (

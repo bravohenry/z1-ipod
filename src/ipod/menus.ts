@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 曲库与会话投影，事件动作作为函数注入。
+ * [INPUT]: 作者歌单、曲库与会话投影，事件动作作为函数注入。
  * [OUTPUT]: buildMenu，ryOS 菜单结构与动作映射。
  * [POS]: iPod 纯菜单投影；创建菜单时不读取 DOM、计时器或播放器引用。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
@@ -10,6 +10,7 @@ import type { Track } from "./ryos/shared/media/library";
 import type { Dispatch, SetStateAction } from "react";
 import { DisplayMode, LyricsAlignment, LyricsFont } from "./ryos/types/lyrics";
 import { resolveTrackCoverUrl } from "./ryos/apps/ipod/constants";
+import { IPOD_PLAYLIST } from "@/data/playlist";
 type MenuEnvironment = {
   library: { tracks: Track[]; remove: (id: string) => void };
   preferences: Preferences;
@@ -137,6 +138,7 @@ export function buildMenu(
       ];
     case "Playlists":
       return [
+        command("Favorites", () => push({ title: "Favorites", kind: "songs" })),
         command("All Songs", () => push({ title: "All Songs", kind: "songs" })),
         command("Favorite Songs", () =>
           push({ title: "Favorite Songs", kind: "favorites" }),
@@ -144,6 +146,8 @@ export function buildMenu(
       ];
     case "All Songs":
       return songs();
+    case "Favorites":
+      return songs((track) => IPOD_PLAYLIST.includes(track.id));
     case "Recently Added":
       return songs().reverse();
     case "Favorite Songs":
@@ -227,7 +231,7 @@ export function buildMenu(
         command("Lyrics", () => push({ title: "Lyrics" })),
         command("Volume", () => push({ title: "Volume" })),
         command("z1han.com 改编自 ryOS", () => setDialog("about")),
-        command("About", () => setDialog("about")),
+        command("About · AGPL-3.0", () => setDialog("about")),
       ];
     case "Display":
       return Object.values(DisplayMode).map((mode) =>

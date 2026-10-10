@@ -6,7 +6,7 @@
  */
 // Shared constants for the iPod app
 
-import {IPOD_LOGICAL_DISPLAY} from "@/ipod/geometry";
+import { IPOD_LOGICAL_DISPLAY } from "@/ipod/geometry";
 import { LyricsAlignment } from "@/ipod/ryos/types/lyrics";
 import type { Track } from "@/ipod/ryos/shared/media/library";
 import { parseYouTubeVideoId } from "@/ipod/ryos/utils/youtubeUrl";
@@ -22,10 +22,10 @@ export {
   getTranslationBadge,
 } from "@/ipod/ryos/utils/lyricsTranslation";
 
-/** Fixed modern iPod LCD outer height (px), including `border-2` on the screen element. */
+/** Z1 logical LCD height; the hardware bezel belongs to Shell. */
 export const IPOD_MODERN_SCREEN_HEIGHT_PX = IPOD_LOGICAL_DISPLAY.height;
 
-/** `border-2` on each side; with `border-box` the drawable area is outer − 4. */
+/** No inner UI border; Shell owns the only black bezel. */
 export const IPOD_MODERN_SCREEN_BORDER_PX = 0;
 
 /** Pixels available for titlebar + menu inside the bordered box. */
@@ -35,7 +35,7 @@ export const IPOD_MODERN_DRAWABLE_HEIGHT_PX =
 /** Silver status / title bar (iOS 6–style, 12px type). */
 export const IPOD_MODERN_TITLEBAR_HEIGHT_PX = 16;
 
-/** Menu list viewport below the status bar: 148 − 16 = 132 (divisible by 6 and 4). */
+/** Menu viewport derives from the shared screen height minus the titlebar. */
 export const IPOD_MODERN_MENU_BODY_HEIGHT_PX =
   IPOD_MODERN_DRAWABLE_HEIGHT_PX - IPOD_MODERN_TITLEBAR_HEIGHT_PX;
 
@@ -56,18 +56,18 @@ function modernMenuBodySlackPx(visibleRows: number): number {
   return IPOD_MODERN_MENU_BODY_HEIGHT_PX % visibleRows;
 }
 
-/** Single-line menu: 132 / 6 = 22px rows; 0 slack. */
+/** Single-line menu divides the available height into six rows. */
 export const IPOD_MODERN_MENU_BODY_SLACK_PX = modernMenuBodySlackPx(
-  IPOD_MODERN_MENU_VISIBLE_ROWS
+  IPOD_MODERN_MENU_VISIBLE_ROWS,
 );
 
 export const IPOD_MODERN_MENU_ROW_HEIGHT_PX =
   (IPOD_MODERN_MENU_BODY_HEIGHT_PX - IPOD_MODERN_MENU_BODY_SLACK_PX) /
   IPOD_MODERN_MENU_VISIBLE_ROWS;
 
-/** Media browse: 132 / 4 = 33px rows; 0 slack. */
+/** Media browse divides the available height into four rows. */
 export const IPOD_MODERN_MEDIA_BODY_SLACK_PX = modernMenuBodySlackPx(
-  IPOD_MODERN_MEDIA_VISIBLE_ROWS
+  IPOD_MODERN_MEDIA_VISIBLE_ROWS,
 );
 
 export const IPOD_MODERN_MEDIA_ROW_HEIGHT_PX =
@@ -89,7 +89,7 @@ export type IpodUiVariant = (typeof IPOD_UI_VARIANTS)[number];
 
 /** Whether a UI variant uses the modern (color-screen) layout. */
 export function isModernIpodUiVariant(
-  variant: IpodUiVariant | string | null | undefined
+  variant: IpodUiVariant | string | null | undefined,
 ): boolean {
   return variant === "modern";
 }
@@ -138,7 +138,7 @@ export function getYouTubeVideoId(url: string): string | null {
  * back gracefully (e.g. to the now-playing track's cover).
  */
 export function resolveTrackCoverUrl(
-  track: { url?: string; cover?: string; source?: string } | null | undefined
+  track: { url?: string; cover?: string; source?: string } | null | undefined,
 ): string | null {
   return resolveMediaCoverUrl(track);
 }
@@ -146,7 +146,7 @@ export function resolveTrackCoverUrl(
 export function getAlbumGroupingKey(
   track: Track,
   unknownAlbumLabel: string,
-  unknownArtistLabel: string
+  unknownArtistLabel: string,
 ): string {
   const album = track.album || unknownAlbumLabel;
   if (track.source === "appleMusic" && track.appleMusicAlbumId) {
@@ -173,7 +173,7 @@ function stripAppleMusicFeaturedArtistSuffix(name: string): string {
 
 export function getArtistGroupingDisplayName(
   track: Track,
-  unknownArtistLabel: string
+  unknownArtistLabel: string,
 ): string {
   const albumArtist = track.albumArtist?.trim();
   const artist = track.artist?.trim();
@@ -190,10 +190,10 @@ export function getArtistGroupingDisplayName(
 
 export function getArtistGroupingKey(
   track: Track,
-  unknownArtistLabel: string
+  unknownArtistLabel: string,
 ): string {
   return getArtistGroupingDisplayName(
     track,
-    unknownArtistLabel
+    unknownArtistLabel,
   ).toLocaleLowerCase();
 }

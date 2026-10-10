@@ -97,10 +97,11 @@ function matchSong(song: KugouSong, title: string, artist: string) {
     a = normalize(artist),
     st = normalize(song.songname ?? ""),
     sa = normalize(song.singername ?? "");
-  return (
-    (!t || !st ? 0 : st === t ? 4 : st.includes(t) || t.includes(st) ? 2 : 0) +
-    (a && sa && (sa.includes(a) || a.includes(sa)) ? 2 : 0)
-  );
+  const titleScore =
+    !t || !st ? 0 : st === t ? 4 : st.includes(t) || t.includes(st) ? 2 : 0;
+  const artistMatches = Boolean(a && sa && (sa.includes(a) || a.includes(sa)));
+  if (!titleScore || (a && !artistMatches)) return 0;
+  return titleScore + (artistMatches ? 2 : 0);
 }
 async function kugouLyrics(
   title: string,

@@ -1,9 +1,10 @@
 /**
  * [INPUT]: 用户参考图的屏幕比例与 ryOS 216px 逻辑宽度。
- * [OUTPUT]: IPOD_BEZEL、IPOD_DISPLAY 与 IPOD_LOGICAL_DISPLAY，屏幕几何唯一参数。
+ * [OUTPUT]: IPOD_SCALE 与三组屏幕尺寸，整机比例和屏幕几何唯一参数。
  * [POS]: 外壳、界面与 ryOS 菜单共用；调整屏幕高度不拉伸字形。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
  */
+export const IPOD_SCALE = 1.1;
 export const IPOD_BEZEL = { width: 196, height: 150, padding: 3.5 } as const;
 export const IPOD_DISPLAY = {
   width: IPOD_BEZEL.width - IPOD_BEZEL.padding * 2,
