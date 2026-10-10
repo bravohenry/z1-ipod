@@ -1,0 +1,345 @@
+/* [INPUT]: ryOS LCD 材质与本地字体。
+ * [OUTPUT]: iPod 内部界面样式。
+ * [POS]: 隔离 iPod 字体与材质；AGPL-3.0-or-later，上游 d989f4d。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
+ */
+.font-ipod-modern-ui {
+  /* UI face (Source Sans 3 OFL stand-in for Myriad Pro used on the iPod nano)
+   * color screen and across iOS 6. We only bundle the bold weight —
+   * the modern skin uses bold everywhere except secondary subtext,
+   * which falls through to Helvetica Neue / -apple-system. */
+  font-family:
+    "MyriadPro",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    "HelveticaNeue",
+    Helvetica,
+    Arial,
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN",
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Apple SD Gothic Neo",
+    "Malgun Gothic",
+    "Nanum Gothic",
+    system-ui,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+  letter-spacing: 0;
+}
+
+.ipod-modern-screen {
+  font-family:
+    "MyriadPro",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    "HelveticaNeue",
+    Helvetica,
+    Arial,
+    system-ui,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: black;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+/* Modern LCD backlight-off: dims the full screen (menus, now playing,
+ * Cover Flow inline) while keeping the same white surface — matches the
+ * classic skin's timed backlight-off behavior without swapping backgrounds. */
+.ipod-modern-screen.ipod-modern-backlight-off {
+  filter: brightness(0.5) contrast(0.9);
+}
+
+/* iPod-classic-js Header (sampled from app/components/Header/index.tsx):
+ *   background: linear-gradient(180deg, #feffff 0%, #b1b6b9 100%);
+ *   reference border-bottom was #7995a3 (slightly blue); we use a neutral gray.
+ *
+ * The modern titlebar is **16px** tall; the **132px** menu body fits six **22px**
+ * rows or four **33px** media rows with no slack (152px outer + border-2).
+ * Classic's title strip stays at 24px to give Chicago bitmap glyphs the room
+ * they need.
+ * The hairline is drawn via inset box-shadow so it doesn't
+ * add height when the existing border-b utility is also present. */
+.ipod-modern-titlebar {
+  background-image: linear-gradient(180deg, #feffff 0%, #b1b6b9 100%);
+  box-shadow: inset 0 -1px 0 #939393;
+}
+
+/* Missing album / playlist artwork — silver inset tile (modern media rows). */
+.ipod-empty-artwork {
+  background-image: linear-gradient(
+    145deg,
+    #f5f6f8 0%,
+    #e2e5ea 38%,
+    #c4cad2 100%
+  );
+}
+
+.ipod-empty-artwork.is-selected {
+  background-image: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0.12) 45%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+}
+
+/* iPod-classic-js list rows are simple white cells with no separator —
+ * the only visual cue is the selection highlight. Hover gives a subtle
+ * grey for mouse users, since a real iPod has no hover state. */
+.ipod-modern-row {
+  background-color: #ffffff;
+}
+
+.ipod-modern-row:hover:not(.ipod-modern-row-selected) {
+  background-color: #f5f5f7;
+}
+
+/* Cover Flow flipped album header — softer and greyer than the active
+ * row highlight so the header reads like the muted hardware reference,
+ * while selected tracks keep the brighter tap target gradient below. */
+.ipod-modern-album-header {
+  background-color: #4f9ed4;
+  background-image: linear-gradient(
+    180deg,
+    #7ebdea 0%,
+    #519fd6 48%,
+    #2f78bc 100%
+  );
+  box-shadow: inset 0 -1px 0 rgba(0, 47, 84, 0.18);
+  color: #ffffff;
+}
+
+/* iPod-classic-js SelectableListItem selection (sampled directly):
+ *   background: linear-gradient(rgb(60, 184, 255) 0%, rgb(52, 122, 181) 100%);
+ *   color: white; */
+.ipod-modern-row-selected {
+  background-image: linear-gradient(
+    180deg,
+    rgb(60, 184, 255) 0%,
+    rgb(52, 122, 181) 100%
+  );
+  color: #ffffff;
+}
+
+/* iPod-classic-js BatteryIndicator (sampled directly):
+ *   ChargeLevelContainer: 1px solid #626262, background #54585b w/ a
+ *     gloss `linear-gradient(180deg, transparent 25%, 65%, rgba(255,255,255,.5))`
+ *   ChargeLevel: green #A5E07F (or red #D17F6B at <=20%) overlaid with a
+ *     specular highlight + dark base.
+ *   BatteryCap: light grey #c4c4c4 with a #626262 outline.
+ *
+ * Sized at 14×7 with a 2×3 cap for the slim 16px modern titlebar — the
+ * gradient stops are unchanged from the iPod-classic-js reference. */
+.ipod-modern-battery-container {
+  border: 1px solid #626262;
+  background-color: #54585b;
+  background-image: linear-gradient(
+    180deg,
+    transparent 25%,
+    transparent 65%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+
+.ipod-modern-battery-fill {
+  background-color: #a5e07f;
+  background-image: linear-gradient(
+    180deg,
+    transparent 10%,
+    rgba(255, 255, 255, 0.5) 20%,
+    transparent 35%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.2) 55%,
+    rgba(0, 0, 0, 0.3) 65%,
+    rgba(0, 0, 0, 0.4) 80%
+  );
+}
+
+.ipod-modern-battery-fill--low {
+  background-color: #d17f6b;
+}
+
+.ipod-modern-battery-cap {
+  background-color: #c4c4c4;
+  border: 1px solid #626262;
+  border-left-width: 0;
+  /* No rounded corners — the iPod classic 6G/7G silver header battery
+   * is a flat rectangle (cap included), not the iOS 6 rounded pill. */
+  border-radius: 0;
+}
+
+/* iPod 6G/7G "split menu" view: the right HALF of the screen shows
+ * the now-playing album art with a slow Ken Burns zoom + pan, while
+ * the menu list + titlebar are clamped to the left half. Matches the
+ * "Music + Now Playing" layout on the iPod classic 6G/7G reference
+ * photo. The container clips the over-scaled image; the inner image
+ * animates `transform`.
+ *
+ * The art panel sits *behind* the menu (z-5 < menu's z-10/z-30) so
+ * the menu's drop shadow lands on top of the artwork. The depth
+ * illusion comes from two stacked sources: an inset gradient on the
+ * art column itself that darkens the leftmost slice of the cover (so
+ * the shadow reads as falling ON the artwork rather than a flat
+ * gutter), plus the soft drop shadow cast by `.ipod-modern-menu-panel`.
+ *
+ * The inner box-shadow uses an inset spread so it darkens roughly
+ * the leftmost ~12px of the cover with a smooth falloff — without
+ * this, the cast shadow alone leaves the cover edge looking too
+ * bright next to the menu, and the split read more like two flat
+ * panels than a layered stack.
+ *
+ * Background is pure black so it reads as a "backface" behind the
+ * cover artwork — as the cover art image fades out during the
+ * split→full transition the visible backing is solid black instead
+ * of leaking the white screen color through. */
+.ipod-modern-split-art {
+  background: #000;
+  box-shadow:
+    inset 8px 0 12px -4px rgba(0, 0, 0, 0.4),
+    inset 3px 0 5px -1px rgba(0, 0, 0, 0.3),
+    inset 1px 0 0 rgba(0, 0, 0, 0.18);
+}
+
+/* LEFT-side menu surface in split mode: must clip its contents (so menu
+ * row chrome and the silver titlebar gradient never bleed past the
+ * panel edge) and cast a soft drop shadow onto the album art panel
+ * to its right. The shadow lands on the artwork because the art
+ * panel sits at z-5 (below the menu's z-10/z-30) and is the SOLE
+ * source of depth — the art panel itself only carries a 1px
+ * hairline. Both the titlebar and content area get this class in
+ * split mode, so the shadow runs unbroken down the entire right
+ * edge of the menu surface. No inset line on the right — that read
+ * as a hard border next to the art; depth comes from the outer
+ * drop-shadow layers only.
+ *
+ * The class is kept mounted on the menu wrapper for every modern UI
+ * frame so the box-shadow can transition smoothly as the menu width
+ * animates split↔full. Default state has both shadow layers at zero
+ * alpha; the `.is-split` modifier fades them in. Combined with a
+ * `transition: box-shadow ...` on the wrapper this gives a smooth
+ * fade of the depth shadow in lock-step with the width animation. */
+.ipod-modern-menu-panel {
+  overflow: hidden;
+  box-shadow:
+    8px 0 16px -2px rgba(0, 0, 0, 0),
+    4px 0 8px -1px rgba(0, 0, 0, 0),
+    1px 0 0 rgba(0, 0, 0, 0);
+}
+
+/* Long-throw shadow stack so the menu reads as a card floating above
+ * the album art column — matches the gutter shadow visible in the
+ * iPod classic 6G/7G reference photo where the cover artwork's left
+ * edge sits a touch darker than its center. Alphas are kept on the
+ * softer side so the seam never reads as a hard inked rule (the
+ * inset gutter on `.ipod-modern-split-art` adds the rest of the
+ * depth on top). */
+.ipod-modern-menu-panel.is-split {
+  box-shadow:
+    8px 0 16px -2px rgba(0, 0, 0, 0.32),
+    4px 0 8px -1px rgba(0, 0, 0, 0.22),
+    1px 0 0 rgba(0, 0, 0, 0.15);
+}
+
+.ipod-modern-split-art-img {
+  transform-origin: center center;
+  animation: ipod-modern-ken-burns 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ipod-modern-ken-burns {
+  0% {
+    transform: scale(1.08) translate(-3%, -2%);
+  }
+  50% {
+    transform: scale(1.18) translate(2%, 1%);
+  }
+  100% {
+    transform: scale(1.1) translate(3%, 3%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ipod-modern-split-art-img {
+    animation: none;
+    transform: scale(1.08);
+  }
+}
+
+@font-face {
+  font-family: MyriadPro;
+  /* OFL Source Sans 3 stands in for the commercial Myriad Pro used upstream */
+  src: url("/ipod/ryos/SourceSans3-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: ChicagoKare;
+  src: url("/ipod/ryos/ChicagoKare-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: IpodGeneva;
+  /* OFL Source Sans 3 stands in for the commercial Geneva bitmap used upstream */
+  src: url("/ipod/ryos/SourceSans3-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+.z1-ipod .font-chicago {
+  font-family: ChicagoKare, sans-serif;
+}
+.z1-ipod .font-geneva-12 {
+  font-family: IpodGeneva, sans-serif;
+}
+.z1-ipod .font-lyrics-serif,
+.z1-ipod .font-lyrics-serif-red {
+  font-family: Georgia, serif;
+}
+.z1-ipod .font-lyrics-rounded,
+.z1-ipod .font-lyrics-gold-glow {
+  font-family: MyriadPro, sans-serif;
+}
+.z1-ipod .font-lyrics-sans,
+.z1-ipod .font-lyrics-gradient {
+  font-family: MyriadPro, sans-serif;
+}
+.z1-ipod .aqua-progress {
+  background: linear-gradient(#aaa, #eee);
+  border: 1px solid #9d9d9d;
+  overflow: hidden;
+}
+.z1-ipod .aqua-progress-fill {
+  background: linear-gradient(#92caff, #347db9 50%, #79b7ec);
+}
+.z1-ipod .ipod-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  background: #f5f5f5;
+  color: #111;
+  font:
+    14px MyriadPro,
+    sans-serif;
+}
+.z1-ipod .ipod-error button {
+  font-size: 12px;
+  height: 24px;
+  padding: 0 8px;
+}
+.z1-ipod:focus-visible {
+  outline: 2px solid #347db9;
+  outline-offset: 4px;
+  border-radius: 20px;
+}

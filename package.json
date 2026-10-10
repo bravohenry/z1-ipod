@@ -1,0 +1,50 @@
+{
+  "name": "z1-ipod",
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.9.0",
+    "@paper-design/shaders-react": "^0.0.81",
+    "@phosphor-icons/react": "^2.1.10",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^14.1.0",
+    "hangul-romanization": "^1.0.1",
+    "i18next": "^26.4.3",
+    "next": "16.4.0",
+    "opencc-js": "^1.4.2",
+    "pinyin-pro": "^3.29.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-i18next": "^17.0.16",
+    "react-player": "2.16.1",
+    "tailwind-merge": "^3.7.0",
+    "three": "^0.186.1",
+    "wanakana": "^5.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.186.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@10.34.6",
+  "license": "AGPL-3.0-or-later",
+  "description": "z1han.com \u6539\u7f16\u81ea ryOS \u2014 open AGPL iPod player adapted from ryOS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bravohenry/z1-ipod.git"
+  },
+  "homepage": "https://github.com/bravohenry/z1-ipod"
+}

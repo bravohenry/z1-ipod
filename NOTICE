@@ -1,0 +1,21 @@
+z1-ipod
+========
+
+This project includes code adapted from ryOS
+(https://github.com/ryokun6/ryos, commit d989f4dc29e5a8ae0054fd741a485f46949049d8)
+by Ryo Lu, licensed under the GNU Affero General Public License v3.0 or later.
+
+Adaptation for Z1 / z1han.com by Zihan Huang (黄子涵).
+UI credit line: 「z1han.com 改编自 ryOS」
+
+Fonts shipped here:
+- ChicagoKare-Regular.woff2 — free Chicago recreation used by upstream ryOS
+- EBGaramond-Latin.woff2 — SIL Open Font License
+- SourceSans3-Regular.woff2 / SourceSans3-Semibold.woff2 — SIL Open Font License
+  (stand-ins for the commercial Myriad Pro and Geneva faces used upstream;
+   those commercial fonts are NOT redistributed)
+
+Landscape wallpaper videos from upstream are intentionally omitted from this
+repository because of size and unclear redistribution rights. The Landscapes
+display mode will show an empty stage unless you add your own videos under
+public/ipod/ryos/wallpapers/videos/ and list them in manifest.json.
