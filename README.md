@@ -18,6 +18,13 @@ pnpm dev
 pnpm build && pnpm start
 ```
 
+## Deploy
+
+1. Import https://github.com/bravohenry/z1-ipod in the Vercel dashboard (project name `z1-ipod`).
+2. Production URL becomes `https://z1-ipod.vercel.app`.
+3. Optional: point `ipod.z1han.com` CNAME at that Vercel project.
+4. Set `NEXT_PUBLIC_Z1_IPOD_URL` on the private z1 project to the same origin.
+
 ## Embed
 
 ```html
