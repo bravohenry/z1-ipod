@@ -4,7 +4,7 @@
 屏幕合成；菜单、封面与播放层读取宿主会话。
 
 成员清单
-IpodScreen.tsx: 菜单与媒体的屏幕总装；导出IpodScreen。
+IpodScreen.tsx: 菜单与媒体的屏幕总装；滚动定位消费菜单路径与选中项，播放时钟/元数据重建数组时保留原生滚动；导出IpodScreen。
 IpodScreenMediaOverlay.tsx: 视频、背景与歌词合成；读取宿主播放请求与时钟；导出IpodScreenMediaOverlayProps, IpodScreenMediaOverlay。
 IpodScreenMenuChrome.tsx: 菜单状态条与行列表；导出IpodScreenMenuChromeProps, IpodScreenMenuChrome。
 IpodScreenSplitArtPanel.tsx: 菜单旁的封面侧栏；导出IpodScreenSplitArtPanelProps, IpodScreenSplitArtPanel。

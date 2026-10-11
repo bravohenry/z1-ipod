@@ -1,7 +1,7 @@
 /**
- * [INPUT]: ryOS 界面依赖与 Z1 宿主适配。
- * [OUTPUT]: 保留上游 IpodScreen 的界面或纯运算。
- * [POS]: ryOS apps/ipod/components/ipod-screen/IpodScreen.tsx 移植；上游 d989f4d，Copyright (C) 2025 Ryo Lu，AGPL-3.0-or-later。
+ * [INPUT]: Z1宿主菜单路径、选中项、播放状态与ryOS界面组件。
+ * [OUTPUT]: IpodScreen，菜单、媒体与原生滚动的屏幕组合。
+ * [POS]: 宿主拥有选择，屏幕按语义变更定位菜单并保留原生滚动；ryOS移植；上游 d989f4d，Copyright (C) 2025 Ryo Lu，AGPL-3.0-or-later。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
  */
 import {
@@ -260,6 +260,11 @@ export function IpodScreen({
     [menuMode, menuHistory]
   );
 
+  const menuIdentity = JSON.stringify(
+    menuHistory.map(({ kind, id, title }) => [kind, id, title]),
+  );
+  const menuItemCount = currentMenuItems.length;
+
   // Track scroll position + container height so we can compute the
   // visible window for virtualization.
   const [menuScrollState, dispatchMenuScroll] = useReducer(
@@ -275,6 +280,7 @@ export function IpodScreen({
   }, []);
 
   useEffect(() => {
+    if (!menuMode || isCoverFlowOpen) return;
     const el = menuScrollRef.current;
     if (!el) return;
     const handleScroll = () => setScrollTop(el.scrollTop);
@@ -288,7 +294,7 @@ export function IpodScreen({
       el.removeEventListener("scroll", handleScroll);
       ro.disconnect();
     };
-  }, [menuMode, currentMenuItems]);
+  }, [menuMode, menuIdentity, isCoverFlowOpen, uiVariant, setScrollTop, setContainerHeight]);
 
   const visibleRange = useMemo(() => {
     const start = Math.max(
@@ -304,27 +310,18 @@ export function IpodScreen({
     return { start, end };
   }, [scrollTop, containerHeight, currentMenuItems.length, menuItemHeight]);
 
-  // Keep the selected item in view. We key on `menuHistory` (the array
-  // reference, not just its length) so EVERY menu transition triggers a
-  // scroll re-evaluation, even when:
-  //   - The previous and next menus happen to have the same length, OR
-  //   - The previous and next menus happen to use the same
-  //     `selectedMenuItem` value (e.g. both default to 0).
-  // Without this, navigating between, say, two equally-deep artist
-  // submenus left the menu scrolled to the previous menu's offset.
-  // Using useLayoutEffect prevents a flicker where the user briefly
-  // sees the wrong scroll position before the correction lands.
-  const lastMenuDepthRef = useRef(menuHistory.length);
+  // 宿主会在播放时钟和元数据更新时重建数组；只按菜单路径与选中项定位。
+  const lastMenuIdentityRef = useRef<string | null>(null);
   useLayoutEffect(() => {
     const el = menuScrollRef.current;
     if (!el) return;
-    if (!menuMode || currentMenuItems.length === 0) {
-      lastMenuDepthRef.current = menuHistory.length;
+    if (!menuMode || isCoverFlowOpen || menuItemCount === 0) {
+      lastMenuIdentityRef.current = null;
       return;
     }
 
-    const isMenuTransition = lastMenuDepthRef.current !== menuHistory.length;
-    lastMenuDepthRef.current = menuHistory.length;
+    const isMenuTransition = lastMenuIdentityRef.current !== menuIdentity;
+    lastMenuIdentityRef.current = menuIdentity;
 
     const containerH = el.clientHeight || IPOD_MODERN_MENU_BODY_HEIGHT_PX;
 
@@ -337,7 +334,7 @@ export function IpodScreen({
     if (isMenuTransition) {
       const safeIndex = Math.max(
         0,
-        Math.min(selectedMenuItem, currentMenuItems.length - 1)
+        Math.min(selectedMenuItem, menuItemCount - 1)
       );
       const itemTop = safeIndex * menuItemHeight;
       const itemBottom = itemTop + menuItemHeight;
@@ -349,7 +346,7 @@ export function IpodScreen({
 
     // Within the same menu (e.g. wheel scrolling), only nudge the
     // scroll when the selection has gone off-screen.
-    if (selectedMenuItem < 0 || selectedMenuItem >= currentMenuItems.length) {
+    if (selectedMenuItem < 0 || selectedMenuItem >= menuItemCount) {
       return;
     }
     const itemTop = selectedMenuItem * menuItemHeight;
@@ -363,7 +360,7 @@ export function IpodScreen({
       // from the bottom edge — feels much more like a "page" jump.
       const maxScrollTop = Math.max(
         0,
-        currentMenuItems.length * menuItemHeight - containerH
+        menuItemCount * menuItemHeight - containerH
       );
       el.scrollTop = Math.min(itemTop, maxScrollTop);
     } else if (itemBottom > visibleBottom) {
@@ -371,7 +368,7 @@ export function IpodScreen({
     } else if (itemTop < visibleTop) {
       el.scrollTop = itemTop;
     }
-  }, [menuMode, selectedMenuItem, menuHistory, currentMenuItems, menuItemHeight, fastScrollLetter, setScrollTop]);
+  }, [menuMode, isCoverFlowOpen, selectedMenuItem, menuIdentity, menuItemCount, menuItemHeight, fastScrollLetter, setScrollTop]);
 
   const shouldShowLyrics = showLyrics;
 

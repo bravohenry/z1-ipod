@@ -29,9 +29,19 @@ Upstream landscape wallpapers are omitted. Landscapes mode needs your own files 
 
 ## Source correspondence
 
-Player TypeScript and hardware styles follow the proposed Z1 PR #15 revision `4b65ec6947052c990aa140049fa8726766664c57` (not a statement that the PR has been deployed). Host import aliases are remapped for this standalone demo.
+Player TypeScript and hardware styles follow Z1 commit `158d8aa695ebdc6e5c98aaf06914180b2ed218af`, including pointer-only focus outline suppression and preserving native list scroll during playback and metadata refreshes. The standalone Tailwind loader is scoped to `globals.css` so the hardware CSS Module keeps its class exports and keyboard focus styles. This is source correspondence, not deployment confirmation. Host import aliases are remapped for this standalone demo.
 
 The demo retains its existing Source Sans 3 substitutions and omits landscape media. `SITE-FONTS.patch` provides the exact site CSS mapping; applying it requires supplying the referenced fonts separately. No font or video binaries were changed by this synchronization.
+
+## UI regression check
+
+With the demo running, use an existing Playwright installation:
+
+```bash
+PLAYWRIGHT_MODULE=/absolute/path/to/playwright/index.mjs node scripts/verify-ipod-ui.mjs http://localhost:3000
+```
+
+The check covers modern and classic menus, scroll preservation during controlled playback, selection positioning, menu transitions, and pointer/keyboard focus. It does not assert live YouTube availability.
 
 ## License
 

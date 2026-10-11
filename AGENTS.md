@@ -4,6 +4,7 @@ Next.js 16.4.0 + React 19.3.0 + TypeScript
 
 <directory>
 src/ - 播放器源码、独立演示与固定歌词API
+scripts/ - 受控播放与输入的界面回归检查
 public/ - 独立演示字体与许可证资产；风景视频由使用者提供
 </directory>
 <config>
@@ -12,6 +13,7 @@ SITE-FONTS.patch - 本站字体CSS映射；不包含字体二进制
 LICENSE - AGPL许可证文本
 NOTICE - 上游署名与改编记录
 package.json - 依赖与运行命令
+next.config.ts - GL适配别名与安全头；仅globals.css走Tailwind，CSS Module保留类名导出
 </config>
 
 [PROTOCOL]: 架构变更时更新此宪法，然后回环检查各 L2 AGENTS.md

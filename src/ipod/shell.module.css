@@ -1,5 +1,5 @@
 /**
- * [INPUT]: Shell 的主题与插槽、Wheel 控件类、宿主 --ipod-shadow。
+ * [INPUT]: Shell主题与插槽、Wheel控件类与data-input输入类型、宿主--ipod-shadow。
  * [OUTPUT]: 连续网格画布与原生屏幕/轮盘；四键共用平面矢量印刷层，金属中心键透出网格，CSS 材质承担静态降级。
  * [POS]: CSS 与网格共用透视和轮廓参数；鼠标侧倾与阻尼归 Shell。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
@@ -235,6 +235,11 @@
   outline: 2px solid var(--ipod-focus-ink);
   outline-offset: -3px;
   box-shadow: none;
+}
+
+/* 指针聚焦保留输入，不绘制键盘专用轮廓。 */
+.wheel[data-input="pointer"] .control:focus-visible {
+  outline: none;
 }
 
 .wheel .control:active {

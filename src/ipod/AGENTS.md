@@ -6,7 +6,7 @@ ryOS 内部界面的 Z1 宿主。React 原生上下文连接菜单、歌词、�
 成员清单
 Shell.tsx: WebGL连续机身与38px厚度；当前甲板内追踪鼠标侧倾，按下冻结，静止与离屏停绘；接收屏幕和轮盘，几何归geometry，材质归shell.module.css。
 Interface.tsx: 屏幕组合边界；将宿主会话投影到ryOS菜单、Cover Flow、歌词与游戏。
-Wheel.tsx: 物理输入边界；点按、长按与旋转调用宿主动作，不占用甲板滚动。
+Wheel.tsx: 物理输入边界；文档输入类型区分指针与键盘焦点，点按、长按与旋转调用宿主动作，不占用甲板滚动。
 Dialogs.tsx: 曲目添加、搜索与来源窗口；About集中展示改编署名、公开源码与许可证，Base UI拥有焦点锁与退出行为。
 geometry.ts: 整机比例与屏幕几何真相源；外壳与内部界面共用逻辑尺寸，字形只等比缩放。
 model.ts: 会话与持久化偏好类型；控制器和纯菜单共享，不依赖DOM。
@@ -21,7 +21,7 @@ i18n.ts: iPod独立翻译实例；消费english.json，不改变全站语言状�
 english.json: ryOS界面的英文翻译资源，由i18n实例装配。
 logger.ts: 移植界面的日志门面；上游调用通过宿主适配。
 ipod.css: 内部界面的隔离字体与LCD材质；保留固定上游样式。
-shell.module.css: 机身与轮盘材质；屏幕插槽关闭上游反光层，投影消费宿主变量。
+shell.module.css: 机身与轮盘材质；仅键盘显示焦点轮廓，屏幕插槽关闭上游反光层，投影消费宿主变量。
 PLAYLIST-SOURCES.md: 作者43首喜爱歌曲的YouTube来源、核对日期与验证限制；不作为播放状态缓存。
 UPSTREAM.md: 固定上游版本、许可证与移植边界；公开许可证文本由public/ipod/ryos提供。
 ryos/: 固定上游 d989f4d 的界面与纯数学，保留 AGPL-3.0。
