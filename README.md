@@ -15,8 +15,8 @@ pnpm dev
 
 ## Attribution (in UI)
 
-- Settings: **z1han.com 改编自 ryOS**
-- About dialog: same line + links to this repo (AGPL-3.0) and ryOS
+- Settings: one **About** entry
+- About dialog: **z1han.com 改编自 ryOS**, with links to this adaptation, ryOS and the license
 - Standalone page footer: same
 
 ## Fonts
@@ -26,6 +26,12 @@ Commercial Myriad Pro / Geneva / VAG Rounded are **not** redistributed. Shipped 
 ## Videos
 
 Upstream landscape wallpapers are omitted. Landscapes mode needs your own files under `public/ipod/ryos/wallpapers/videos/`.
+
+## Source correspondence
+
+Player TypeScript and hardware styles follow the proposed Z1 PR #15 revision `4b65ec6947052c990aa140049fa8726766664c57` (not a statement that the PR has been deployed). Host import aliases are remapped for this standalone demo.
+
+The demo retains its existing Source Sans 3 substitutions and omits landscape media. `SITE-FONTS.patch` provides the exact site CSS mapping; applying it requires supplying the referenced fonts separately. No font or video binaries were changed by this synchronization.
 
 ## License
 

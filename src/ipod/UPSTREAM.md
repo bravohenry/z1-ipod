@@ -1,6 +1,7 @@
 # ryOS iPod 移植
 
 来源：https://github.com/ryokun6/ryos
+改编源码：https://github.com/bravohenry/z1-ipod
 版本：d989f4dc29e5a8ae0054fd741a485f46949049d8
 许可证：AGPL-3.0-or-later；完整文本见 public/ipod/ryos/LICENSE.txt。
 
@@ -15,6 +16,3 @@ Apple Music/MusicKit、云同步、AI翻译未接入。公开演示不得宣称�
 用户看见的About保留上游源码与许可证入口；公开部署前须满足AGPL对应源码要求。
 
 [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
-
-
-公开源码镜像：https://github.com/bravohenry/z1-ipod（AGPL-3.0）。站点内署名：z1han.com 改编自 ryOS。

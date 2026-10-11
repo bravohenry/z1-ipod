@@ -1,0 +1,31 @@
+--- a/src/ipod/ipod.css
++++ b/src/ipod/ipod.css
+@@ -4,7 +4,7 @@
+  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
+  */
+ .font-ipod-modern-ui {
+-  /* UI face (Source Sans 3 OFL stand-in for Myriad Pro on the iPod nano)
++  /* MyriadPro (bold cut) is Apple's brand face on the iPod nano 6G/7G
+    * color screen and across iOS 6. We only bundle the bold weight —
+    * the modern skin uses bold everywhere except secondary subtext,
+    * which falls through to Helvetica Neue / -apple-system. */
+@@ -278,8 +278,7 @@
+ 
+ @font-face {
+   font-family: MyriadPro;
+-  /* OFL Source Sans 3 stand-in for commercial Myriad Pro (not redistributed) */
+-  src: url("/ipod/ryos/SourceSans3-Semibold.woff2") format("woff2");
++  src: url("/ipod/ryos/MyriadPro-Semibold.woff2") format("woff2");
+   font-weight: 600;
+   font-display: swap;
+ }
+@@ -291,8 +290,7 @@
+ }
+ @font-face {
+   font-family: IpodGeneva;
+-  /* OFL Source Sans 3 stand-in for commercial Geneva (not redistributed) */
+-  src: url("/ipod/ryos/SourceSans3-Regular.woff2") format("woff2");
++  src: url("/ipod/ryos/geneva-12.woff2") format("woff2");
+   font-display: swap;
+ }
+ .z1-ipod .font-chicago {

@@ -2,7 +2,6 @@
  * [INPUT]: 作者提供的 Apple Music 喜爱歌曲，保留作者歌曲并按风格编排；Dangerous Woman与王力宏开场。
  * [OUTPUT]: IPOD_TRACKS 曲目信息、IPOD_PLAYLIST 视频 ID 与 IPOD_PLAYLIST_URLS。
  * [POS]: 作者歌单唯一真相源；首页与作品页共享。本地增删归 use-library。
- * 公开镜像 bravohenry/z1-ipod 同步同款曲目。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
  */
 export const IPOD_TRACKS = [

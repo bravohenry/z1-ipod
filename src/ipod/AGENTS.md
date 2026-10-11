@@ -7,7 +7,7 @@ ryOS 内部界面的 Z1 宿主。React 原生上下文连接菜单、歌词、�
 Shell.tsx: WebGL连续机身与38px厚度；当前甲板内追踪鼠标侧倾，按下冻结，静止与离屏停绘；接收屏幕和轮盘，几何归geometry，材质归shell.module.css。
 Interface.tsx: 屏幕组合边界；将宿主会话投影到ryOS菜单、Cover Flow、歌词与游戏。
 Wheel.tsx: 物理输入边界；点按、长按与旋转调用宿主动作，不占用甲板滚动。
-Dialogs.tsx: 曲目添加、搜索与来源窗口；Base UI拥有焦点锁与退出行为。
+Dialogs.tsx: 曲目添加、搜索与来源窗口；About集中展示改编署名、公开源码与许可证，Base UI拥有焦点锁与退出行为。
 geometry.ts: 整机比例与屏幕几何真相源；外壳与内部界面共用逻辑尺寸，字形只等比缩放。
 model.ts: 会话与持久化偏好类型；控制器和纯菜单共享，不依赖DOM。
 use-controller.ts: iPod会话唯一写入口；连接菜单、播放、偏好与游戏。

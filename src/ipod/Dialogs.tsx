@@ -1,6 +1,6 @@
 /**
  * [INPUT]: Base UI Dialog/Button 与 iPod 宿主会话。
- * [OUTPUT]: IpodDialogs，添加、搜索和来源窗口。
+ * [OUTPUT]: IpodDialogs，添加、搜索和来源窗口；About提供改编署名与公开源码入口。
  * [POS]: 屏幕之外的编辑边界；Base UI 拥有焦点锁、Escape 与回程。
  * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
  */
@@ -38,25 +38,20 @@ export function IpodDialogs({ c }: { c: IpodController }) {
           </Dialog.Title>
           {c.dialog === "about" ? (
             <>
-              <p className="mb-3 text-base font-medium tracking-tight">
-                z1han.com 改编自 ryOS
-              </p>
+              <p className="mb-3 text-base font-medium">z1han.com 改编自 ryOS</p>
               <Dialog.Description className="text-sm">
                 iPod interface by Ryo Lu / ryOS (commit d989f4d). Adapted for
-                Z1 by Zihan Huang. Licensed under AGPL-3.0-or-later.
+                Z1 by Zihan Huang, licensed under AGPL-3.0-or-later.
               </Dialog.Description>
               <p className="my-3 text-sm">
-                Public source for this adaptation:{" "}
-                <a
-                  href="https://github.com/bravohenry/z1-ipod"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline"
-                >
+                Source for this adaptation:{" "}
+                <a href="https://github.com/bravohenry/z1-ipod" target="_blank" rel="noreferrer" className="underline">
                   bravohenry/z1-ipod
-                </a>{" "}
-                (AGPL-3.0). Apple Music requires separate developer credentials.
-                YouTube playback follows each video’s embed permissions.
+                </a>
+              </p>
+              <p className="my-3 text-sm">
+                Apple Music requires separate developer credentials. YouTube
+                playback follows each video’s embed permissions.
               </p>
               <a
                 href="https://github.com/ryokun6/ryos"
@@ -64,15 +59,7 @@ export function IpodDialogs({ c }: { c: IpodController }) {
                 rel="noreferrer"
                 className="underline"
               >
-                Original ryOS
-              </a>
-              <a
-                href="https://github.com/bravohenry/z1-ipod"
-                target="_blank"
-                rel="noreferrer"
-                className="ml-4 underline"
-              >
-                z1-ipod (AGPL-3.0)
+                Original source
               </a>
               <a
                 href="/ipod/ryos/LICENSE.txt"
@@ -80,7 +67,7 @@ export function IpodDialogs({ c }: { c: IpodController }) {
                 rel="noreferrer"
                 className="ml-4 underline"
               >
-                License text
+                License
               </a>
             </>
           ) : (

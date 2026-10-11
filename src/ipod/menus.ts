@@ -230,8 +230,7 @@ export function buildMenu(
         command("Display", () => push({ title: "Display" })),
         command("Lyrics", () => push({ title: "Lyrics" })),
         command("Volume", () => push({ title: "Volume" })),
-        command("z1han.com 改编自 ryOS", () => setDialog("about")),
-        command("About · AGPL-3.0", () => setDialog("about")),
+        command("About", () => setDialog("about")),
       ];
     case "Display":
       return Object.values(DisplayMode).map((mode) =>

@@ -1,6 +1,9 @@
 /**
- * GET /api/ipod/lyrics — same-origin lyrics proxy for the open z1-ipod player.
- * Bounded params, shared rate limiter, miss cache. KuGou/LRCLIB only via lib/ipod-lyrics.
+ * [INPUT]: 有界曲目参数、request-guard同源/IP/限流能力与ipod-lyrics固定提供方。
+ * [OUTPUT]: GET同步歌词；成功结果缓存6小时，未命中缓存5分钟。
+ * [POS]: iPod歌词请求边界；有Origin时要求同源，无Origin允许服务器请求。
+ *        每IP未缓存请求上限为12次/分钟与120次/小时。
+ * [PROTOCOL]: 变更时更新此头部，然后检查 AGENTS.md
  */
 import { fetchIpodLyrics, type IpodLyricLine } from "@/lib/ipod-lyrics";
 import { createRateLimiter, isSameOriginRequest, requestClientIp } from "@/lib/request-guard";
